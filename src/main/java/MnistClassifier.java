@@ -50,11 +50,11 @@ public class MnistClassifier {
         Random randNumGen = new Random(rngseed);
         int batchSize = 100;
         int outputNum = 10;
-        int numEpochs = 50;
-        int numHidden = 2048;
+        int numEpochs = 30;
+        int numHidden = 515;
 
         // download the MNIST data and store it in ~/mnist_png/training
-//        MnistImages.downloadData();
+        MnistImages.downloadData();
 
         // Define the File Paths
         File trainData = new File(DATA_PATH + "/mnist_png/training");
@@ -84,7 +84,7 @@ public class MnistClassifier {
                 .seed(rngseed)
                 .optimizationAlgo(OptimizationAlgorithm.STOCHASTIC_GRADIENT_DESCENT)
                 .iterations(1)
-                .learningRate(0.1)
+                .learningRate(10)
                 .list()
                 .layer(0, new DenseLayer.Builder()
                         .nIn(height * width)
@@ -96,7 +96,7 @@ public class MnistClassifier {
                         .nOut(numHidden)
                         .activation(Activation.RELU)
                         .build())
-                .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.NEGATIVELOGLIKELIHOOD)
+                .layer(2, new OutputLayer.Builder(LossFunctions.LossFunction.SQUARED_LOSS)
                 .nIn(numHidden)
                 .nOut(outputNum)
                 .activation(Activation.SOFTMAX)
